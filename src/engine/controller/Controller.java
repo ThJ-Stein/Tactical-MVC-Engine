@@ -5,11 +5,9 @@ import engine.command.InputCommand;
 import engine.command.InputCommandHandler;
 import engine.controller.GameState;
 
-import java.util.HashMap;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.SynchronousQueue;
 
 /**
  * Created by thomas on 4-2-17.
