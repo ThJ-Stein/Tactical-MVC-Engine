@@ -35,6 +35,16 @@ public class StatConstraints {
         return constraintMap.get(stat)[1];
     }
 
+    public boolean verifyStats(Stats stats) {
+        for (Stats.Stat stat : Stats.Stat.values()) {
+            int statInt = stats.getStat(stat);
+            if (statInt > getMax(stat) || statInt < getMin(stat)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public int[] getMinArray() {
         int[] minArray = new int[constraintMap.size()];
 
