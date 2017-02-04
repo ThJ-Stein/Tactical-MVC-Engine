@@ -3,9 +3,11 @@ package engine.controller;
 import engine.GameLoop;
 import engine.command.InputCommand;
 import engine.command.InputCommandHandler;
+import engine.controller.engine.controller.GameState;
 
 import java.util.HashMap;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.SynchronousQueue;
 
@@ -17,14 +19,16 @@ public abstract class Controller {
 
     private Queue<InputCommand> commandQueue;
 
-    private HashMap<InputCommand.Type, InputCommandHandler> commandMap;
+    private Stack<GameState> gameStates;
+
+    //private GameState gameState;
 
     private GameLoop gameLoop;
 
     {
-        commandQueue = new LinkedBlockingQueue<>();
+        gameStates = new Stack<>();
 
-        commandMap = new HashMap<>();
+        commandQueue = new LinkedBlockingQueue<>();
 
         gameLoop = new GameLoop(FPS, this::run);
     }
@@ -35,14 +39,25 @@ public abstract class Controller {
 
     public void run() {
         InputCommand command = commandQueue.peek();
-        if (command != null && commandMap.containsKey(command.getType())) {
-            commandQueue.poll();
-            InputCommandHandler handler = commandMap.get(command.getType());
-            System.out.println(handler);
+        if (command != null && getGameState().canTakeInput(commandQueue.poll())) {
+            InputCommandHandler handler = getGameState().getCommandHandler(command);
+            handler.executeCommand(command);
         }
     }
 
     public void enqueueCommand(InputCommand command) {
         commandQueue.add(command);
+    }
+
+    public void setState(GameState gameState) {
+        gameStates.push(gameState);
+    }
+
+    public void removeState() {
+        gameStates.pop();
+    }
+
+    public GameState getGameState() {
+        return gameStates.peek();
     }
 }

@@ -1,6 +1,7 @@
 package engine.view;
 
 import engine.command.InputCommand;
+import engine.controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +15,8 @@ import java.util.HashMap;
  * Created by thomas on 4-2-17.
  */
 public class View extends JFrame {
+    protected Controller controller;
+
     protected Canvas canvas;
 
     HashMap<KeyStroke, InputCommand> keyMap;
@@ -75,10 +78,9 @@ public class View extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-                System.out.println(keyEvent);
                 KeyStroke key = KeyStroke.getKeyStroke(keyEvent.getKeyChar());
-                if (keyMap.containsKey(key)) {
-                    System.out.println(keyMap.get(key));
+                if (controller != null && keyMap.containsKey(key)) {
+                    controller.enqueueCommand(keyMap.get(key));
                 }
             }
 
@@ -87,5 +89,9 @@ public class View extends JFrame {
 
             }
         });
+    }
+
+    public void connectController(Controller controller) {
+        this.controller = controller;
     }
 }

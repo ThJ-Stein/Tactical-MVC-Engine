@@ -37,4 +37,12 @@ public class InputCommand {
     public String getMessage() {
         return message;
     }
+
+    @Override
+    public String toString() {
+        return "InputCommand{" +
+                "type=" + type +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }
