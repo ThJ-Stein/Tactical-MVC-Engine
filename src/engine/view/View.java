@@ -11,9 +11,5 @@ public class View extends JFrame {
 
     public View(String s) {
         super(s);
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setVisible(true);
     }
 }
