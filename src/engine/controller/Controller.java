@@ -3,7 +3,7 @@ package engine.controller;
 import engine.GameLoop;
 import engine.command.InputCommand;
 import engine.command.InputCommandHandler;
-import engine.controller.engine.controller.GameState;
+import engine.controller.GameState;
 
 import java.util.HashMap;
 import java.util.Queue;
@@ -51,10 +51,11 @@ public abstract class Controller {
 
     public void setState(GameState gameState) {
         gameStates.push(gameState);
+        gameState.setActive();
     }
 
     public void removeState() {
-        gameStates.pop();
+        gameStates.pop().setInactive();
     }
 
     public GameState getGameState() {
