@@ -64,17 +64,4 @@ public class ArrayShuffler {
             Collections.swap(toRearrange, i, shuffledList.indexOf(i));
         }
     }
-
-
-
-    public static void main(String[] args) {
-        ArrayShuffler shuffler = new ArrayShuffler(10);
-
-        int[] integers = new int[]{1,2,3,4,5,6,7,8,9,0};
-
-        System.out.println(Arrays.toString(integers));
-        shuffler.shuffle(integers);
-        System.out.println(Arrays.toString(integers));
-        shuffler.rearrange(integers);
-    }
 }
