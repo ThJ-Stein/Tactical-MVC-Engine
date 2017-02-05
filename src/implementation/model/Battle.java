@@ -21,6 +21,10 @@ public class Battle {
         unit.setLocation(x, y);
     }
 
+    public GridMap getMap() {
+        return map;
+    }
+
     @Override
     public String toString() {
         return "Battle{" +

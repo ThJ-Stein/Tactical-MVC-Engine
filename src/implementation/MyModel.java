@@ -3,6 +3,7 @@ package implementation;
 import engine.Model;
 import implementation.model.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,11 @@ public class MyModel extends Model {
     private Battle activeBattle = null;
 
     public void startBattle() {
-        activeBattle = new Battle(GridMap.createGridMap());
+        try {
+            activeBattle = new Battle(GridMap.readGridmap("map0.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Battle getBattle() {

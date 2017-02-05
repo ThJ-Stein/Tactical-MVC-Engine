@@ -5,6 +5,7 @@ import engine.command.InputCommand;
 import engine.controller.Controller;
 import engine.controller.GameState;
 import engine.view.gui.DebugView;
+import implementation.model.painters.BattlePainter;
 
 /**
  * Created by thomas on 4-2-17.
@@ -34,6 +35,8 @@ public class MyController extends Controller {
         startBattleState.setOnActive(() -> {
             setModel(new MyModel());
             model().startBattle();
+            getView().addPainter(new BattlePainter(model()));
+
             println(model().getBattle().toString());
         });
     }

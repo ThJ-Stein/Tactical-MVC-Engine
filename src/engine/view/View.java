@@ -1,5 +1,6 @@
 package engine.view;
 
+import engine.GameLoop;
 import engine.command.InputCommand;
 import engine.controller.Controller;
 
@@ -14,9 +15,13 @@ import java.util.HashMap;
  * Created by thomas on 4-2-17.
  */
 public class View extends JFrame {
+    public static final int FPS = 60;
+
     protected Controller controller;
 
     protected Canvas canvas;
+
+    private GameLoop viewLoop;
 
     public void setupListeners() {
         addMouseListener(new MouseListener() {
@@ -70,7 +75,13 @@ public class View extends JFrame {
     HashMap<KeyStroke, InputCommand> keyMap;
 
     {
+        viewLoop = new GameLoop(60, this::run);
+
         keyMap = new HashMap<>();
+    }
+
+    private void run() {
+        canvas.repaint();
     }
 
     public View(String s) {
@@ -78,6 +89,8 @@ public class View extends JFrame {
     }
 
     public void init() {
+        viewLoop.start();
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
@@ -92,5 +105,9 @@ public class View extends JFrame {
 
     public void connectController(Controller controller) {
         this.controller = controller;
+    }
+
+    public void addPainter(CanvasPainter painter) {
+        canvas.addPainter(painter);
     }
 }
