@@ -15,7 +15,7 @@ public class MyApp {
         this.view = new MyView("MyApp");
 
         controller.setView(view);
-        view.connectController(controller);
+        view.setController(controller);
     }
 
     public static void main(String[] args) {
