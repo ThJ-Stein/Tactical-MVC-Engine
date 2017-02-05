@@ -1,5 +1,7 @@
 package implementation.model;
 
+import implementation.model.exceptions.CannotGenerateStatsException;
+
 import java.util.ArrayList;
 
 /**
@@ -31,5 +33,24 @@ public class Unit {
         return jobs.get(primaryJob);
     }
 
+    public static Unit createUnitWithJob(Job job) {
+        assert job.getConstraints().canCreateValidStats();
+
+        ArrayList<Job> jobs = new ArrayList<>();
+        jobs.add(job);
+
+        String name = "Bert";
+
+        Stats stats = null;
+
+        //TODO have exception propagate
+        try {
+            stats = Stats.createStats(job.getConstraints());
+        } catch (CannotGenerateStatsException e) {
+            e.printStackTrace();
+        }
+
+        Unit unit = new Unit(name, jobs, stats);
+        return unit;
     }
 }
