@@ -18,29 +18,6 @@ public class View extends JFrame {
 
     protected Canvas canvas;
 
-    HashMap<KeyStroke, InputCommand> keyMap;
-
-    {
-        keyMap = new HashMap<>();
-    }
-
-    public View(String s) {
-        super(s);
-    }
-
-    public void init() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setVisible(true);
-
-        setFocusable(true);
-        setupListeners();
-    }
-
-    public void mapKey(char key, InputCommand command) {
-        keyMap.put(KeyStroke.getKeyStroke(key), command);
-    }
-
     public void setupListeners() {
         addMouseListener(new MouseListener() {
             @Override
@@ -88,6 +65,29 @@ public class View extends JFrame {
 
             }
         });
+    }
+
+    HashMap<KeyStroke, InputCommand> keyMap;
+
+    {
+        keyMap = new HashMap<>();
+    }
+
+    public View(String s) {
+        super(s);
+    }
+
+    public void init() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setVisible(true);
+
+        setFocusable(true);
+        setupListeners();
+    }
+
+    public void mapKey(char key, InputCommand command) {
+        keyMap.put(KeyStroke.getKeyStroke(key), command);
     }
 
     public void connectController(Controller controller) {

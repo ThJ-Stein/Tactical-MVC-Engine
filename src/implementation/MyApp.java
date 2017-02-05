@@ -14,6 +14,7 @@ public class MyApp {
         this.controller = new MyController();
         this.view = new MyView("MyApp");
 
+        controller.setView(view);
         view.connectController(controller);
     }
 
