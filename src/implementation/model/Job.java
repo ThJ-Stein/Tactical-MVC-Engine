@@ -2,10 +2,17 @@ package implementation.model;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
+import implementation.model.parsers.JobParser;
 import org.codehaus.groovy.runtime.ArrayUtil;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -14,25 +21,16 @@ import java.util.HashMap;
  */
 public class Job {
 
-    public static final String PATH = "script/jobs";
+    public static final String PATH = "data/jobs.json";
 
     public static final HashMap<String, Job> JOB_MAP = new HashMap();
 
     private final StatConstraints constraints;
 
-
     static {
-        File folder = new File(PATH);
-
-        GroovyShell shell = new GroovyShell();
-
-        try {
-            for (File script : folder.listFiles()) {
-                shell.run(script, new String[0]);
-            }
-        } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
-        }
+        File file = new File(PATH);
+        JobParser parser = new JobParser(file);
+        parser.slurp();
     }
 
     private final String name;
