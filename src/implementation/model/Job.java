@@ -51,6 +51,10 @@ public class Job {
         JOB_MAP.put(name.toUpperCase(), job);
     }
 
+    public static Job getJob(String name) {
+        assert JOB_MAP.containsKey(name);
+        return JOB_MAP.get(name);
+    }
     public StatConstraints getConstraints() {
         return constraints;
     }
