@@ -39,6 +39,19 @@ public class StatConstraints {
 
     private final EnumMap<Stats.Stat, int[]> constraintMap;
 
+    public StatConstraints(ArrayList<Integer> minStats, ArrayList<Integer> maxStats) {
+        assert minStats.size() == Stats.Stat.values().length;
+        assert maxStats.size() == Stats.Stat.values().length;
+
+        constraintMap = new EnumMap<Stats.Stat, int[]>(Stats.Stat.class);
+
+        Stats.Stat[] values = Stats.Stat.values();
+        for (int i = 0; i < values.length; i++) {
+            Stats.Stat stat = values[i];
+            constraintMap.put(stat, new int[]{minStats.get(i), maxStats.get(i)});
+        }
+    }
+
     public StatConstraints(int[] minStats, int[] maxStats) {
         assert minStats.length == Stats.Stat.values().length;
         assert maxStats.length == Stats.Stat.values().length;

@@ -37,9 +37,9 @@ public class Job {
 
     private final String name;
 
-    private Job(String name, int[] constraintsMin, int[] constraintsMax) {
-        if (constraintsMin.length != Stats.howManyStats()) throw new AssertionError();
-        if (constraintsMax.length != Stats.howManyStats()) throw new AssertionError();
+    private Job(String name, ArrayList<Integer> constraintsMin, ArrayList<Integer> constraintsMax) {
+        if (constraintsMin.size() != Stats.howManyStats()) throw new AssertionError();
+        if (constraintsMax.size() != Stats.howManyStats()) throw new AssertionError();
 
         this.name = name;
         this.constraints = new StatConstraints(constraintsMin, constraintsMax);
@@ -48,7 +48,7 @@ public class Job {
     }
 
     //groovy must use int[] declaration, otherwise the list will be an arraylist of Integer
-    public static void createJob(String name, int[] constraintsMin, int[] constraintsMax) {
+    public static void createJob(String name, ArrayList<Integer> constraintsMin, ArrayList<Integer> constraintsMax) {
         Job job = new Job(name, constraintsMin, constraintsMax);
         JOB_MAP.put(name.toUpperCase(), job);
     }
