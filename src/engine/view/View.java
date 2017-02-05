@@ -30,8 +30,15 @@ public abstract class View extends JFrame {
      */
     private Canvas canvas = null;
 
+    /**
+     * The GameLoop object that continuously executes this:run after init() is called
+     */
     private GameLoop viewLoop;
 
+    /**
+     * The hash map that maps KeyStrokes (from the KeyEvents resulting from key presses) to InputCommands that
+     * get sent to the controller
+     */
     private HashMap<KeyStroke, InputCommand> keyMap = new HashMap<>();
 
     /**
@@ -47,6 +54,11 @@ public abstract class View extends JFrame {
      * Gets called at the end of the subclass constructor. When this method is called, the canvas and content pane are
      * set properly, so much of the initialization that would usually be done in the constructor, is instead handled by
      * this method.
+     *
+     * The reason why init is separated from the constructor is because the subclass DebugView (possibly among others)
+     * is created with IntelliJ IDEA's GUI Builder. It has a generated initializer where canvas is instantiated, and
+     * it warns the user not to add or alter any code after in or after the initializer. The first moment when the
+     * subclass' own code can be run is in the constructor after the super() call.
      */
     protected void init() {
         assert canvas != null;
