@@ -108,11 +108,6 @@ public class Stats {
                 '}';
     }
 
-    //TODO remove main later on
-    public static void main(String[] args) {
-
-    }
-
     /**
      * Created by thomas on 4-2-17.
      */
