@@ -1,20 +1,28 @@
 package implementation;
 
+import engine.GameLoop;
 import engine.command.InputCommand;
 import engine.controller.Controller;
 import engine.controller.GameState;
+import engine.view.gui.DebugView;
 
 /**
  * Created by thomas on 4-2-17.
  */
 public class MyController extends Controller {
-    GameState debugState = new GameState();
+    public GameState debugState = new GameState();
+    public GameState exitState = new GameState();
 
-    GameState exitState = new GameState();
+    public GameState startBattleState = new GameState();
 
     {
-        debugState.mapCommand(InputCommand.Type.CONFIRM, command -> {
-            System.out.println("Pressed Confirm!");
+        debugState.setOnActive(() -> {
+            //println("Press start to load model.");
+        });
+
+        debugState.mapCommand(InputCommand.Type.START, command -> {
+            println("Going to enter battle state.");
+            setState(startBattleState);
         });
 
         debugState.mapCommand(InputCommand.Type.CANCEL, command -> {
@@ -23,6 +31,18 @@ public class MyController extends Controller {
     }
 
     {
+        startBattleState.setOnActive(() -> {
+            setModel(new MyModel());
+            model().startBattle();
+            println(model().getBattle().toString());
+        });
+    }
+
+    {
+        exitState.setOnActive(() -> {
+            println("Do you really want to exit the game?");
+        });
+
         exitState.mapCommand(InputCommand.Type.CONFIRM, command -> {
             System.exit(0);
         });
@@ -30,13 +50,23 @@ public class MyController extends Controller {
         exitState.mapCommand(InputCommand.Type.CANCEL, command -> {
             removeState();
         });
+    }
 
-        exitState.setOnActive(() -> {
-            System.out.println("Do you really want to exit the game?");
-        });
+    GameState initialState = debugState;
+
+    public void println(String s) {
+        ((DebugView) getView()).println(s);
+    }
+
+    public MyModel model() {
+        return (MyModel) getModel();
     }
 
     public MyController() {
-        setState(debugState);
+        setState(getInitialState());
+    }
+
+    public GameState getInitialState() {
+        return initialState;
     }
 }

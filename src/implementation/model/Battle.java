@@ -10,7 +10,7 @@ public class Battle {
 
     private ArrayList<BattleUnit> units;
 
-    private Battle(GridMap map) {
+    public Battle(GridMap map) {
         this.map = map;
         units = new ArrayList<>();
     }

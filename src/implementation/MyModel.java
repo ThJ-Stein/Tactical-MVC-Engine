@@ -12,4 +12,12 @@ public class MyModel extends Model {
     private ArrayList<Unit> unitList = new ArrayList<>();
 
     private Battle activeBattle = null;
+
+    public void startBattle() {
+        activeBattle = new Battle(GridMap.createGridMap());
+    }
+
+    public Battle getBattle() {
+        return activeBattle;
+    }
 }
