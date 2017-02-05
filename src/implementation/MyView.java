@@ -17,8 +17,4 @@ public class MyView extends DebugView {
         mapKey('x', new InputCommand(InputCommand.Type.CANCEL));
         mapKey((char) KeyEvent.VK_ENTER, new InputCommand(InputCommand.Type.START));
     }
-
-    public static void main(String[] args) {
-        View view = new MyView("MyApp");
-    }
 }
