@@ -15,19 +15,19 @@ public class DebugView extends View {
     private JPanel rootPanel;
     private JButton button;
     private JTextField textField;
-    private JTextArea textArea1;
+    private JTextArea outputConsole;
 
     public DebugView(String s) {
         super(s);
 
-        super.canvas = canvas;
+        setCanvas(canvas);
         setContentPane(rootPanel);
 
         init();
     }
 
     public void println(String s) {
-        textArea1.append(s + "\n");
+        outputConsole.append(s + "\n");
     }
 
     public static void main(String[] args) {
@@ -63,8 +63,8 @@ public class DebugView extends View {
         panel1.add(textField, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(-1, 400), null, 0, false));
-        textArea1 = new JTextArea();
-        scrollPane1.setViewportView(textArea1);
+        outputConsole = new JTextArea();
+        scrollPane1.setViewportView(outputConsole);
     }
 
     /**
