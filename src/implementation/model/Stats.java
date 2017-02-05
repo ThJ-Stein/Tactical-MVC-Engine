@@ -91,6 +91,11 @@ public class Stats {
         return getStatSum() == STAT_TOTAL;
     }
 
+    //TODO rename this method
+    public static int howManyStats() {
+        return Stat.values().length;
+    }
+
     @Override
     public String toString() {
         return "Stats{" +
@@ -98,18 +103,28 @@ public class Stats {
                 '}';
     }
 
+    //TODO remove main later on
     public static void main(String[] args) {
-        StatConstraints constraints = new StatConstraints(
-                new int[]{0,50,50,50,0,0,0,0},
-                new int[]{100,100,100,100,100,100,100,100}
+        StatConstraints constraints = StatConstraints.combineConstraints(
+                new StatConstraints[]{
+                        Job.getSoldierJob().getConstraints(),
+                        StatConstraints.GENERATION_CONSTRAINTS
+                }
         );
 
         System.out.println(constraints);
 
-        for (int i = 0; i < 100; i++) {
+        int totalwithoutzero = 0;
+
+        for (int i = 0; i < 10; i++) {
             Stats stats = createStats(constraints);
-            System.out.println(stats);
+            if (!stats.statMap.values().contains(0)) {
+                System.out.println(stats);
+                totalwithoutzero++;
+            }
         }
+
+        System.out.println(totalwithoutzero);
     }
 
     /**
