@@ -2,10 +2,7 @@ package implementation.model;
 
 import implementation.model.exceptions.CannotGenerateStatsException;
 
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /**
@@ -126,6 +123,14 @@ public class StatConstraints {
         }
 
         return new StatConstraints(min, max);
+    }
+
+    public static StatConstraints combineConstraints(ArrayList<Job> jobs) {
+        StatConstraints[] constraintsList = new StatConstraints[jobs.size()];
+        for (int i = 0, jobsSize = jobs.size(); i < jobsSize; i++) {
+            constraintsList[i] = jobs.get(i).getConstraints();
+        }
+        return combineConstraints(constraintsList);
     }
 
     @Override
