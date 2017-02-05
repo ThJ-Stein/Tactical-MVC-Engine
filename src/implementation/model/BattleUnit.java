@@ -5,8 +5,23 @@ package implementation.model;
  */
 public class BattleUnit {
     private final Unit unit;
+    private int x;
+    private int y;
 
     public BattleUnit(Unit unit) {
         this.unit = unit;
+    }
+
+    public int x() {
+        return x;
+    }
+
+    public int y() {
+        return y;
+    }
+
+    public void setLocation(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 }
