@@ -53,4 +53,14 @@ public class Unit {
         Unit unit = new Unit(name, jobs, stats);
         return unit;
     }
+
+    @Override
+    public String toString() {
+        return "Unit{" +
+                "name='" + name + '\'' +
+                ", jobs=" + jobs +
+                ", primaryJob=" + primaryJob +
+                ", stats=" + stats +
+                '}';
+    }
 }

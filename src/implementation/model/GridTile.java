@@ -37,4 +37,9 @@ public class GridTile {
     public void setUnit(BattleUnit unit) {
         this.unit = unit;
     }
+
+    @Override
+    public String toString() {
+        return unit != null ? "@" : ".";
+    }
 }

@@ -1,5 +1,7 @@
 package implementation.model;
 
+import java.util.Arrays;
+
 /**
  * Created by thomas on 4-2-17.
  */
@@ -25,6 +27,17 @@ public class GridMap {
 
         return tiles[y][x];
     }
+
+    @Override
+    public String toString() {
+        String value = "";
+        for (int y = 0; y < getHeight(); y++) {
+            for (int x = 0; x < getWidth(); x++) {
+                value += getTile(x, y) + " ";
+            }
+            value += "\n";
+        }
+        return value;
     }
 
     //TODO this method is veeeery unfinished

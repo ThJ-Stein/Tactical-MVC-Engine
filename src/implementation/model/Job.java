@@ -55,9 +55,16 @@ public class Job {
         assert JOB_MAP.containsKey(name);
         return JOB_MAP.get(name);
     }
-    public StatConstraints getConstraints() {
-        return constraints;
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "constraints=" + constraints +
+                ", name='" + name + '\'' +
+                '}';
     }
 
+    public StatConstraints getConstraints() {
+        return constraints;
     }
 }
