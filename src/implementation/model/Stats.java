@@ -110,8 +110,7 @@ public class Stats {
 
     //TODO remove main later on
     public static void main(String[] args) {
-        System.out.println(StatConstraints.ZERO_CONSTRAINTS.canCreateValidStats());
-        System.out.println(Job.SOLDIER.getConstraints().canCreateValidStats());
+
     }
 
     /**

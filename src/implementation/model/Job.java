@@ -1,31 +1,38 @@
 package implementation.model;
 
+import groovy.lang.Binding;
+import groovy.lang.GroovyShell;
+import org.codehaus.groovy.runtime.ArrayUtil;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+
 /**
  * Created by thomas on 4-2-17.
  */
 public class Job {
-    public static final Job SOLDIER;
-    public static final Job APPRENTICE;
-    public static final Job THIEF;
+
+    public static final String PATH = "script/jobs";
+
+    public static final HashMap<String, Job> JOB_MAP = new HashMap();
 
     private final StatConstraints constraints;
 
 
     static {
-        SOLDIER = new Job("Soldier",
-                new int[]{40, 40, 40, 30, 0, 0, 30, 20},
-                new int[]{100, 100, 100, 100, 40, 40, 100, 100}
-        );
+        File folder = new File(PATH);
 
-        APPRENTICE = new Job("Apprentice",
-                new int[]{20, 0, 0, 20, 40, 40, 20, 30},
-                new int[]{100, 40, 40, 100, 100, 100, 100, 100}
-        );
+        GroovyShell shell = new GroovyShell();
 
-        THIEF = new Job("Thief",
-                new int[]{30, 30, 0, 50, 0, 0, 50, 30},
-                new int[]{100, 100, 50, 100, 40, 100, 100, 100}
-        );
+        try {
+            for (File script : folder.listFiles()) {
+                shell.run(script, new String[0]);
+            }
+        } catch (IOException | NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     private final String name;
@@ -40,7 +47,17 @@ public class Job {
         if (!constraints.canCreateValidStats()) throw new AssertionError();
     }
 
+    //groovy must use int[] declaration, otherwise the list will be an arraylist of Integer
+    public static void createJob(String name, int[] constraintsMin, int[] constraintsMax) {
+        Job job = new Job(name, constraintsMin, constraintsMax);
+        JOB_MAP.put(name.toUpperCase(), job);
+    }
+
     public StatConstraints getConstraints() {
         return constraints;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(JOB_MAP);
     }
 }
