@@ -11,15 +11,32 @@ import java.util.stream.IntStream;
  */
 public class StatConstraints {
 
-    public static StatConstraints UNIVERSAL_CONSTRAINTS = new StatConstraints(
-            new int[]{0, 0, 0, 0, 0, 0, 0, 0},
-            new int[]{100, 100, 100, 100, 100, 100, 100, 100}
-    );
+    public static StatConstraints UNIVERSAL_CONSTRAINTS;
 
-    public static StatConstraints GENERATION_CONSTRAINTS = new StatConstraints(
-            new int[]{10, 10, 10, 10, 10, 10, 10, 10},
-            new int[]{80, 80, 80, 80, 80, 80, 80, 80}
-    );
+    public static StatConstraints GENERATION_CONSTRAINTS;
+
+    public static StatConstraints ZERO_CONSTRAINTS;
+
+    public static StatConstraints HUNDRED_CONSTRAINTS;
+
+    static {
+        UNIVERSAL_CONSTRAINTS = new StatConstraints(
+                new int[]{0, 0, 0, 0, 0, 0, 0, 0},
+                new int[]{100, 100, 100, 100, 100, 100, 100, 100}
+        );
+        GENERATION_CONSTRAINTS = new StatConstraints(
+                new int[]{10, 10, 10, 10, 10, 10, 10, 10},
+                new int[]{80, 80, 80, 80, 80, 80, 80, 80}
+        );
+        ZERO_CONSTRAINTS = new StatConstraints(
+                new int[]{0, 0, 0, 0, 0, 0, 0, 0},
+                new int[]{0, 0, 0, 0, 0, 0, 0, 0}
+        );
+        HUNDRED_CONSTRAINTS = new StatConstraints(
+                new int[]{100, 100, 100, 100, 100, 100, 100, 100},
+                new int[]{100, 100, 100, 100, 100, 100, 100, 100}
+        );
+    }
 
     private final EnumMap<Stats.Stat, int[]> constraintMap;
 
