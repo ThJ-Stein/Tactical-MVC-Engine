@@ -1,5 +1,7 @@
 package implementation.model;
 
+import implementation.model.exceptions.CannotGenerateStatsException;
+
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Iterator;
@@ -44,7 +46,6 @@ public class StatConstraints {
         assert minStats.length == Stats.Stat.values().length;
         assert maxStats.length == Stats.Stat.values().length;
 
-
         constraintMap = new EnumMap<Stats.Stat, int[]>(Stats.Stat.class);
 
         Stats.Stat[] values = Stats.Stat.values();
@@ -52,7 +53,6 @@ public class StatConstraints {
             Stats.Stat stat = values[i];
             constraintMap.put(stat, new int[]{minStats[i], maxStats[i]});
         }
-
     }
 
     public boolean verifyStats(Stats stats) {
@@ -62,6 +62,16 @@ public class StatConstraints {
                 return false;
             }
         }
+        return true;
+    }
+
+    public boolean canCreateValidStats() {
+        try {
+            Stats.createStats(this);
+        } catch (CannotGenerateStatsException e) {
+            return false;
+        }
+
         return true;
     }
 
