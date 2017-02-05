@@ -37,10 +37,10 @@ public abstract class View extends JFrame {
     /**
      * The constructor that gets called by a subclass. The canvas object is not yet available at this point, and the
      * content pane is not yet set by the subclass either.
-     * @param windowString the title of the window
+     * @param windowTitle the title of the window
      */
-    protected View(String windowString) {
-        super(windowString);
+    protected View(String windowTitle) {
+        super(windowTitle);
     }
 
     /**

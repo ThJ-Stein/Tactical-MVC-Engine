@@ -7,18 +7,46 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * The DebugView is an implementation of the View that displays a canvas, as well as a scrollable text output and
+ * an input field. As such, it can function both as a TUI and a GUI.
  * Created by thomas on 4-2-17.
  */
-public class DebugView extends View {
+public abstract class DebugView extends View {
 
+    /**
+     * The Canvas object that will be painted continuously
+     */
     private Canvas canvas;
+
+    /**
+     * The containter for all other components in the window
+     */
     private JPanel rootPanel;
-    private JButton button;
-    private JTextField textField;
+
+    /**
+     * The text area where debug output will be printed
+     */
     private JTextArea outputConsole;
 
-    public DebugView(String s) {
-        super(s);
+    /**
+     * The text field where debug commands can be entered
+     */
+    private JTextField textField;
+
+    /**
+     * A button that has the same effect as pressing enter in the text field
+     */
+    private JButton button;
+
+    /**
+     * The constructor calls View's constructor to set the window's title, then passes the canvas object to the
+     * superclass, so that it can use the reference to let it repaint continuously. After that, it calls super::init,
+     * so it can finish setting up. It also sets the content pane to the root pane that is created by IntelliJ IDEA's
+     * GUI creator, so that its contents, including the canvas, are displayed in the window.
+     * @param windowTitle
+     */
+    public DebugView(String windowTitle) {
+        super(windowTitle);
 
         setCanvas(canvas);
         setContentPane(rootPanel);
@@ -26,12 +54,14 @@ public class DebugView extends View {
         init();
     }
 
-    public void println(String s) {
-        outputConsole.append(s + "\n");
-    }
-
-    public static void main(String[] args) {
-        DebugView view = new DebugView("MyApp");
+    /**
+     * Implementation of the abstract println method. It prints the debug output to the console in the window, below
+     * the canvas.
+     * @param debugOutput
+     */
+    @Override
+    public void println(String debugOutput) {
+        outputConsole.append(debugOutput + "\n");
     }
 
     {
