@@ -1,5 +1,6 @@
 package implementation.model;
 
+import implementation.model.exceptions.CannotGenerateStatsException;
 import util.ArrayShuffler;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class Stats {
         assert hasCorrectTotal();
     }
 
-    public static Stats createStats(StatConstraints constraints) {
+    public static Stats createStats(StatConstraints constraints) throws CannotGenerateStatsException {
         Random rng = new Random();
 
         ArrayShuffler shuffler = new ArrayShuffler(Stat.values().length);
@@ -65,7 +66,11 @@ public class Stats {
             int minTotal = STAT_TOTAL - sumOfPreviousValues - sumOfMaxRemaining;
             int min = Math.max(minTotal, minArray[i]);
 
-            statArray[i] = rng.nextInt((max - min) + 1) + min;
+            try {
+                statArray[i] = rng.nextInt((max - min) + 1) + min;
+            } catch (IllegalArgumentException e) {
+                throw new CannotGenerateStatsException(statArray, min, max, i);
+            }
         }
 
         shuffler.rearrange(statArray);
@@ -105,26 +110,8 @@ public class Stats {
 
     //TODO remove main later on
     public static void main(String[] args) {
-        StatConstraints constraints = StatConstraints.combineConstraints(
-                new StatConstraints[]{
-                        Job.getSoldierJob().getConstraints(),
-                        StatConstraints.GENERATION_CONSTRAINTS
-                }
-        );
-
-        System.out.println(constraints);
-
-        int totalwithoutzero = 0;
-
-        for (int i = 0; i < 10; i++) {
-            Stats stats = createStats(constraints);
-            if (!stats.statMap.values().contains(0)) {
-                System.out.println(stats);
-                totalwithoutzero++;
-            }
-        }
-
-        System.out.println(totalwithoutzero);
+        System.out.println(StatConstraints.ZERO_CONSTRAINTS.canCreateValidStats());
+        System.out.println(Job.SOLDIER.getConstraints().canCreateValidStats());
     }
 
     /**
