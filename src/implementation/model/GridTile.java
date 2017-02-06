@@ -1,7 +1,5 @@
 package implementation.model;
 
-import util.IntPoint;
-
 /**
  * Created by thomas on 4-2-17.
  */
