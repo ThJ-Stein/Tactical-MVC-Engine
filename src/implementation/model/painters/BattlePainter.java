@@ -9,12 +9,11 @@ import java.awt.*;
 /**
  * Created by thomas on 5-2-17.
  */
-public class BattlePainter extends CanvasPainter {
-
-    private final MyModel model;
+public class BattlePainter implements CanvasPainter {
 
     private final int DX = 20;
     private final int DY = 20;
+    private final MyModel model;
 
     public BattlePainter(MyModel model) {
         this.model = model;
