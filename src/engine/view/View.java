@@ -52,26 +52,14 @@ public abstract class View {
      * Constructs a new View with a new instance of the ViewFrame subclass that is gets passed, whose window
      * has the windowTitle as a title. The window requests a reference to the canvas of the ViewFrame subclass and
      * sets up the right event listeners, then starts the game loop.
-     * TODO improve javadoc
-     * TODO justify why the parameter is a class instead of an instance / reconsider this choice
-     * @param windowTitle the title of the window
+     * TODO change javadoc to reflect change from ViewFrame.class to instance
+     * @param window the title of the window
      */
-    protected View(Class<? extends ViewFrame> viewFrameClass, String windowTitle) {
-        try {
-            window = viewFrameClass.getDeclaredConstructor(String.class).newInstance(windowTitle);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+    protected View(ViewFrame window) {
+        this.window = window;
 
         canvas = window.getCanvas();
 
-        //pack is here instead of in viewframe because pack needs to happen after setcontentpane
         window.pack();
 
         setupListeners(window);

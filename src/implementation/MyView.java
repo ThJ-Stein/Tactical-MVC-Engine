@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
  */
 public class MyView extends View {
     public MyView(String s) {
-        super(DebugView.class, s);
+        super(new DebugView("MyApp"));
 
         mapKey('z', new InputCommand(InputCommand.getTypeObject("CONFIRM")));
         mapKey('x', new InputCommand(InputCommand.getTypeObject("CANCEL")));
