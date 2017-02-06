@@ -21,12 +21,12 @@ public class MyController extends Controller {
             //println("Press start to load model.");
         });
 
-        debugState.mapCommand(InputCommand.Type.START, command -> {
+        debugState.mapCommand(InputCommand.getTypeObject("START"), command -> {
             println("Going to enter battle state.");
             setState(startBattleState);
         });
 
-        debugState.mapCommand(InputCommand.Type.CANCEL, command -> {
+        debugState.mapCommand(InputCommand.getTypeObject("CANCEL"), command -> {
             setState(exitState);
         });
     }
@@ -36,8 +36,6 @@ public class MyController extends Controller {
             setModel(new MyModel());
             model().startBattle();
             getView().addPainter(new BattlePainter(model()));
-
-            println(model().getBattle().toString());
         });
     }
 
@@ -46,11 +44,11 @@ public class MyController extends Controller {
             println("Do you really want to exit the game?");
         });
 
-        exitState.mapCommand(InputCommand.Type.CONFIRM, command -> {
+        exitState.mapCommand(InputCommand.getTypeObject("CONFIRM"), command -> {
             System.exit(0);
         });
 
-        exitState.mapCommand(InputCommand.Type.CANCEL, command -> {
+        exitState.mapCommand(InputCommand.getTypeObject("CANCEL"), command -> {
             removeState();
         });
     }

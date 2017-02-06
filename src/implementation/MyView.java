@@ -13,8 +13,8 @@ public class MyView extends DebugView {
     public MyView(String s) {
         super(s);
 
-        mapKey('z', new InputCommand(InputCommand.Type.CONFIRM));
-        mapKey('x', new InputCommand(InputCommand.Type.CANCEL));
-        mapKey((char) KeyEvent.VK_ENTER, new InputCommand(InputCommand.Type.START));
+        mapKey('z', new InputCommand(InputCommand.getTypeObject("CONFIRM")));
+        mapKey('x', new InputCommand(InputCommand.getTypeObject("CANCEL")));
+        mapKey((char) KeyEvent.VK_ENTER, new InputCommand(InputCommand.getTypeObject("START")));
     }
 }
