@@ -7,7 +7,7 @@ public class EclipseDebugWindow extends ViewFrame {
 	private Canvas canvas = new Canvas();
 	
 	{
-		getRootPane().add(canvas);
+		getContentPane().add(canvas);
 	}
 
 	public EclipseDebugWindow(String windowTitle) {
