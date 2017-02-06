@@ -9,9 +9,9 @@ import java.awt.event.KeyEvent;
 /**
  * Created by thomas on 4-2-17.
  */
-public class MyView extends DebugView {
+public class MyView extends View {
     public MyView(String s) {
-        super(s);
+        super(DebugView.class, s);
 
         mapKey('z', new InputCommand(InputCommand.getTypeObject("CONFIRM")));
         mapKey('x', new InputCommand(InputCommand.getTypeObject("CANCEL")));

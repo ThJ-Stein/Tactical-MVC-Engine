@@ -11,7 +11,7 @@ import java.awt.*;
  * an input field. As such, it can function both as a TUI and a GUI.
  * Created by thomas on 4-2-17.
  */
-public abstract class DebugView extends View {
+public class DebugView extends ViewFrame {
 
     /**
      * The Canvas object that will be painted continuously
@@ -43,15 +43,13 @@ public abstract class DebugView extends View {
      * superclass, so that it can use the reference to let it repaint continuously. After that, it calls super::init,
      * so it can finish setting up. It also sets the content pane to the root pane that is created by IntelliJ IDEA's
      * GUI creator, so that its contents, including the canvas, are displayed in the window.
-     * @param windowTitle
+     * @param windowTitle the title that will appear on the view
      */
     public DebugView(String windowTitle) {
         super(windowTitle);
 
-        setCanvas(canvas);
+        //setCanvas(canvas);
         setContentPane(rootPanel);
-
-        init();
     }
 
     /**
@@ -59,9 +57,12 @@ public abstract class DebugView extends View {
      * the canvas.
      * @param debugOutput
      */
-    @Override
     public void println(String debugOutput) {
         outputConsole.append(debugOutput + "\n");
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
     }
 
     {

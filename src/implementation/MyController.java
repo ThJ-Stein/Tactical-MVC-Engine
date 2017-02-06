@@ -56,7 +56,7 @@ public class MyController extends Controller {
     GameState initialState = debugState;
 
     public void println(String s) {
-        ((DebugView) getView()).println(s);
+        getView().println(s);
     }
 
     public MyModel model() {

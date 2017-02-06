@@ -3,9 +3,11 @@ package engine.view;
 import engine.GameLoop;
 import engine.command.InputCommand;
 import engine.controller.Controller;
+import engine.view.gui.ViewFrame;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 /**
@@ -13,7 +15,7 @@ import java.util.HashMap;
  * gets displayed by it.
  * Created by thomas on 4-2-17.
  */
-public abstract class View extends JFrame {
+public abstract class View {
 
     /**
      * The amount of times the canvas will be repainted each second
@@ -31,7 +33,7 @@ public abstract class View extends JFrame {
     private Canvas canvas = null;
 
     /**
-     * The GameLoop object that continuously executes this:run after init() is called
+     * The GameLoop object that continuously executes this:run in a dedicated thread after init() is called
      */
     private GameLoop viewLoop;
 
@@ -42,33 +44,37 @@ public abstract class View extends JFrame {
     private HashMap<KeyStroke, InputCommand> keyMap = new HashMap<>();
 
     /**
-     * The constructor that gets called by a subclass. The canvas object is not yet available at this point, and the
-     * content pane is not yet set by the subclass either.
-     * @param windowTitle the title of the window
+     * The window that carries the canvas.
      */
-    protected View(String windowTitle) {
-        super(windowTitle);
-    }
+    private ViewFrame window = null;
 
     /**
-     * Gets called at the end of the subclass constructor. When this method is called, the canvas and content pane are
-     * set properly, so much of the initialization that would usually be done in the constructor, is instead handled by
-     * this method.
-     *
-     * The reason why init is separated from the constructor is because the subclass DebugView (possibly among others)
-     * is created with IntelliJ IDEA's GUI Builder. It has a generated initializer where canvas is instantiated, and
-     * it warns the user not to add or alter any code after in or after the initializer. The first moment when the
-     * subclass' own code can be run is in the constructor after the super() call.
+     * Constructs a new View with a new instance of the ViewFrame subclass that is gets passed, whose window
+     * has the windowTitle as a title. The window requests a reference to the canvas of the ViewFrame subclass and
+     * sets up the right event listeners, then starts the game loop.
+     * TODO improve javadoc
+     * TODO justify why the parameter is a class instead of an instance / reconsider this choice
+     * @param windowTitle the title of the window
      */
-    protected void init() {
-        assert canvas != null;
+    protected View(Class<? extends ViewFrame> viewFrameClass, String windowTitle) {
+        try {
+            window = viewFrameClass.getDeclaredConstructor(String.class).newInstance(windowTitle);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setVisible(true);
+        canvas = window.getCanvas();
 
-        setFocusable(true);
-        setupListeners();
+        //pack is here instead of in viewframe because pack needs to happen after setcontentpane
+        window.pack();
+
+        setupListeners(window);
 
         viewLoop = new GameLoop(60, this::run);
         viewLoop.start();
@@ -76,12 +82,14 @@ public abstract class View extends JFrame {
 
     /**
      * Sets up all the relevant listeners for the window. Gets called by this::init.
+     * Note to self: this method cannot be in ViewFrame because the KeyListener references the method
+     * enqueueIfNecessary
      */
-    private void setupListeners() {
-        addMouseListener(new MouseListener() {
+    private void setupListeners(JFrame window) {
+        window.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
-                requestFocus();
+                window.requestFocus();
             }
 
             @Override
@@ -105,7 +113,7 @@ public abstract class View extends JFrame {
             }
         });
 
-        addKeyListener(new KeyListener() {
+        window.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
 
@@ -150,7 +158,7 @@ public abstract class View extends JFrame {
     }
 
     /**
-     * Puts a KeyStroke - InputCommand pair in the view's key map. This should be called by a subclass, but might also
+     * Puts a KeyStroke - InputCommand pair in the window's key map. This should be called by a subclass, but might also
      * ba called by a Controller when a user wishes to change key mappings.
      * @param key the character from which the keystroke is put into the map
      * @param command the InputCommand that gets sent to the controller when the keystroke is registered
@@ -175,7 +183,7 @@ public abstract class View extends JFrame {
      * @param canvas the canvas to be updated continuously
      */
     protected void setCanvas(Canvas canvas) {
-        assert canvas == null;
+        assert this.canvas == null;
 
         this.canvas = canvas;
     }
@@ -190,9 +198,10 @@ public abstract class View extends JFrame {
     }
 
     /**
-     * Abstract method that can print debug output. Final products should ideally either do nothing, or print the
-     * output to a log file.
-     * @param message the string to print
+     * Tells the window frame to print a string into its debug log.
+     * @param debugOutput the string to print
      */
-    public abstract void println(String message);
+    public void println(String debugOutput) {
+        window.println(debugOutput);
+    }
 }
